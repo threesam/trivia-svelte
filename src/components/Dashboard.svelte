@@ -15,7 +15,13 @@
     border-left: 0.125rem solid rgba(200, 200, 200, 0.3);
     border-right: 0.125rem solid rgba(200, 200, 200, 0.3);
     background: rgba(0,0,0,0.69);
-    padding: 2rem 2rem;
+    padding: 1rem;
+  }
+
+  @media (max-height: 812px) {
+    h1 {
+      padding: 0.25rem;
+    }
   }
 </style>
 

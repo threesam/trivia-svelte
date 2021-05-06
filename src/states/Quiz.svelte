@@ -60,7 +60,7 @@
     border-left: 0.125rem solid rgba(76, 174, 4, 0.3);
     border-right: 0.125rem solid rgba(76, 174, 4, 0.3);
     background: rgba(0,0,0,0.69);
-    padding: 2rem 2rem;
+    padding: 1rem;
   }
 
   button:hover {
@@ -68,6 +68,12 @@
     border-left: 0.125rem solid rgba(76, 174, 4, 1);
     border-right: 0.125rem solid rgba(76, 174, 4, 1);
     color:rgba(0, 200, 0, 1);
+  }
+
+  @media(max-height: 812px) {
+    button {
+      padding: 0.25rem;
+    }
   }
 </style>
 
