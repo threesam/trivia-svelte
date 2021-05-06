@@ -33,6 +33,15 @@
     place-items: center;
     min-height: 100vh;
   }
+
+  @media (max-height: 812px) {
+    main {
+      display: block;
+      position: relative;
+      margin: 0 auto;
+      padding: 2rem 0;
+    }
+  }
 </style>
 
 <P5Canvas id="bg" {sketch} />
