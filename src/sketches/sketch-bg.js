@@ -4,7 +4,7 @@ const sketch = (p5) => {
     p5.setup = () => {
         p5.createCanvas(document.body.offsetWidth, document.body.offsetHeight)
 
-        const particlesL = 200
+        const particlesL = document.body.offsetWidth / 4
         for (let i = 0; i < particlesL; i++) {
             particles.push(new Particle(Math.floor(p5.random(12, 32)), Math.floor(p5.random(25, 250))))
         }
@@ -39,7 +39,7 @@ const sketch = (p5) => {
         }
 
         render() {
-            p5.fill(76, this.color, 4)
+            p5.fill(76, this.color, 4, 100)
             p5.text('?', this.pos.x, this.pos.y)
             p5.textSize(this.size)
         }
