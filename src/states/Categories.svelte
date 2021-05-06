@@ -1,9 +1,10 @@
 <script>
-  import Category from './Category.svelte'
-
   import { onMount } from 'svelte'
   import { fade, slide } from 'svelte/transition'
-  import { activeCategory } from './store.js'
+
+  // components
+  import Loading from '../components/Loading.svelte'
+  import Category from '../components/Category.svelte'
 
   let categories = []
 
@@ -12,6 +13,7 @@
   async function getCategories() {
     const res = await fetch('https://opentdb.com/api_category.php')
     const data = await res.json()
+    // prevent duplicates
     const uniqueCategories = [...new Set(data.trivia_categories)]
     uniqueCategories.forEach((category) => {
       if (category.name.includes(':')) {
@@ -45,12 +47,12 @@
   }
 </style>
 
-<h1 in:fade={{delay: 500}}>Categories</h1>
-<section in:fade={{delay: 1000}}>
+<h1 in:fade={{duration: 500}}>Categories</h1>
+<section>
   {#await getCategories()}
-    loading...
+    <Loading />
   {:then categories}
-    <ul in:slide out:fade>
+    <ul>
       {#each categories as {id, name}, i}
         <Category {id} {i}>{name}</Category>
       {/each}

@@ -1,12 +1,15 @@
 <script>
-  import Dashboard from './Dashboard.svelte'
-  import { fade, blur, slide, scale } from 'svelte/transition'
   import { onMount } from 'svelte'
-  import Question from './Question.svelte'
-  import Modal from './Modal.svelte'
+  import { blur } from 'svelte/transition'
+
+  // components
+  import Dashboard from '../components/Dashboard.svelte'
+  import Question from '../components/Question.svelte'
+  import Modal from '../components/Modal.svelte'
+  import Loading from '../components/Loading.svelte'
 
   // store
-  import { score, activeCategory, showQuiz, showCategories } from './store.js'
+  import { score, activeCategory, showQuiz, showCategories, showMenu, victory } from '../utils/store.js'
 
   let activeQuestion = 0
   let isModalOpen = false
@@ -17,7 +20,6 @@
     const url = `https://opentdb.com/api.php?amount=20&category=${$activeCategory}&type=multiple`
     const res = await fetch(url)
     const data = await res.json()
-    console.log(data)
     return data
   }
 
@@ -29,17 +31,18 @@
     isModalOpen = false
     score.set(0)
     activeQuestion = 0
-    $showQuiz = true
-    getQuiz()
+    $showQuiz = false
+    $showMenu = true
   }
 
   function getCategories() {
+    score.set(0)
     $showQuiz = false
     $showCategories = true
   }
 
   // reactive statement
-  $: if ($score > 2) {
+  $: if ($score > $victory) {
     isModalOpen = true
   }
 
@@ -56,25 +59,32 @@
     font-family: monospace;
     font-size: 150%;
     color: silver;
-    border-top: 0.125rem solid rgba(0, 200, 0, 0.3);
-    border-left: 0.125rem solid rgba(0, 200, 0, 0.3);
-    border-right: 0.125rem solid rgba(0, 200, 0, 0.3);
+    border-top: 0.125rem solid rgba(76, 174, 4, 0.3);
+    border-left: 0.125rem solid rgba(76, 174, 4, 0.3);
+    border-right: 0.125rem solid rgba(76, 174, 4, 0.3);
     background: rgba(0,0,0,0.69);
     padding: 2rem 2rem;
   }
+
+  button:hover {
+    border-top: 0.125rem solid rgba(76, 174, 4, 1);
+    border-left: 0.125rem solid rgba(76, 174, 4, 1);
+    border-right: 0.125rem solid rgba(76, 174, 4, 1);
+    color:rgba(0, 200, 0, 1);
+  }
 </style>
 
-<Dashboard {activeQuestion} />
+<Dashboard />
 <section>
   {#await getQuiz()}
-  Loading...
+    <Loading />
   {:then data}
     {#each data.results as question, index}
       {#if index === activeQuestion}
         <div
           in:blur={{ duration: 1000 }}
           class="fade-wrapper">
-          <Question {nextQuestion} {question} />
+          <Question {nextQuestion} {question} {activeQuestion}/>
         </div>
       {/if}
     {/each}

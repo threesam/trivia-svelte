@@ -1,6 +1,6 @@
 <script>
   export let id, i = 0
-  import { activeCategory, showCategories, showQuiz } from './store'
+  import { activeCategory, showCategories, showQuiz } from '../utils/store'
 
   import {fly} from 'svelte/transition'
 
@@ -28,7 +28,7 @@
   }
 </style>
 
-<li in:fly={{delay: i * 100 + 100, y: 50}}>
+<li in:fly={{delay: i * 50 +500, y: 25}}>
   <button {id} on:click={updateActive}>
     <slot />
   </button>

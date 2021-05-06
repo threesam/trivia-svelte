@@ -1,6 +1,6 @@
 <script>
   import {blur, scale} from 'svelte/transition'
-  import {showCategories, showMenu} from './store'
+  import {showCategories, showMenu} from '../utils/store'
 
   const begin = () => {
     $showMenu = false

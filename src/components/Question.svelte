@@ -1,9 +1,7 @@
 <script>
-  import { score } from './store.js'
-  import {slide} from 'svelte/transition'
+  import { score } from '../utils/store.js'
 
-  export let question
-  export let nextQuestion
+  export let question, nextQuestion, activeQuestion
 
   let isCorrect
   let isAnswered = false
@@ -47,7 +45,9 @@
   }
   p {
     padding-bottom: 2rem;
-    font-size: 1rem;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    font-weight: 100;
   }
 
   .buttons {
@@ -55,10 +55,28 @@
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1rem;
     gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .buttons:last-child {
+    grid-row: 1/ span 2;
+  }
+
+  span {
+    border-right: 0.125rem solid green;
+    border-bottom: 0.125rem solid green;
+    padding-right: 0.5rem;
+    padding-bottom: 0.25rem;
+    margin-right: 0.75rem;
+    font-weight: 900;
   }
   @media(max-width: 767px) {
     .buttons {
       grid-template-columns: 1fr;
+    }
+
+    p {
+    font-size: 1rem;
     }
   }
   button {
@@ -75,21 +93,25 @@
     transition: all 0.5s ease-in-out;
   }
 
-  button:nth-child(5) {
-    border: none;
-  }
+
 
   .visible {
     visibility: visible;
+    border: 0.125rem solid transparent;
+  }
+
+  .visible:hover {
+    border: 0.125rem solid var(--color);
   }
 
   .hidden {
     visibility: hidden;
+    border: 0.125rem solid transparent;
   }
 </style>
 
 <article>
-  <p>{@html question.question}</p>
+  <p><span>{activeQuestion + 1}</span><em>{@html question.question}</em></p>
   <div class="buttons">
     {#each allAnswers as answer}
       <button
@@ -99,8 +121,8 @@
         {@html answer.answer}
       </button>
     {/each}
-    <button class={isAnswered ? 'visible' : 'hidden'} on:click={nextQuestion}>
-      Next Question
-    </button>
   </div>
+  <button class="{isAnswered ? 'visible' : 'hidden'}" on:click={nextQuestion}>
+    Next Question
+  </button>
 </article>

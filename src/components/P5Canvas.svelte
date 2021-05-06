@@ -1,6 +1,6 @@
 <script>
   export let id
-  import p5 from './p5.min'
+  import p5 from '../sketches/p5.min'
   export let sketch
 
   import { onMount } from 'svelte'

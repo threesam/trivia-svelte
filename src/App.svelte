@@ -1,13 +1,13 @@
 <script>
   import { onMount } from 'svelte';
   
-  import Quiz from './Quiz.svelte'
-  import Categories from './Categories.svelte'
-  import Menu from './Menu.svelte'
-  import P5Canvas from './P5Canvas.svelte'
+  import Quiz from './states/Quiz.svelte'
+  import Categories from './states/Categories.svelte'
+  import Menu from './states/Menu.svelte'
+  import P5Canvas from './components/P5Canvas.svelte'
   import sketch from './sketches/sketch-bg'
 
-  import { showQuiz, showCategories, showMenu } from './store.js'
+  import { showQuiz, showCategories, showMenu } from './utils/store.js'
 
   onMount(() => {
     $showMenu = true

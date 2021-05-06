@@ -1,7 +1,7 @@
 <script>
   import { fly, fade } from 'svelte/transition'
   import P5Canvas from './P5Canvas.svelte'
-  import sketch from './sketches/sketch-victory.js'
+  import sketch from '../sketches/sketch-victory.js'
 </script>
 
 <style>
