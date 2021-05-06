@@ -81,7 +81,7 @@ const sketch = (p5) => {
                     //
                     //if below threshold, glow in the dark
                     //
-                    p5.stroke(250, mapA)
+                    p5.stroke(76, 174, 4, mapA)
                     p5.strokeWeight(2)
                     p5.line(this.pos.x, this.pos.y, particle.pos.x, particle.pos.y)
                 }

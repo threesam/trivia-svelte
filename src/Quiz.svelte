@@ -1,6 +1,6 @@
 <script>
   import Dashboard from './Dashboard.svelte'
-  import { fade, blur, fly, slide, scale } from 'svelte/transition'
+  import { fade, blur, slide, scale } from 'svelte/transition'
   import { onMount } from 'svelte'
   import Question from './Question.svelte'
   import Modal from './Modal.svelte'
@@ -34,8 +34,8 @@
   }
 
   function getCategories() {
-    $showCategories = true
     $showQuiz = false
+    $showCategories = true
   }
 
   // reactive statement
@@ -48,62 +48,39 @@
 </script>
 
 <style>
-  section {
-    position: relative;
-  }
-  .fade-wrapper {
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-  }
-  h2 {
-    font-size: 3rem;
-    margin: 0 0 0.5rem 0;
-  }
-  h3 {
-    width: 100%;
-    height: 3rem;
-    font-size: 1rem;
-    text-align: center;
-    padding: 1rem;
-    text-transform: uppercase;
-    background: linear-gradient(var(--black), rgba(0, 0, 0, 0));
-    color: var(--dark-grey);
-    text-shadow: 0 0.125rem rgba(var(--black-rgb), 0.69);
-    cursor: pointer;
-  }
-  h3:hover {
-    background: linear-gradient(var(--black), var(--black));
-    transition: all 0.3s ease-in-out;
-  }
-  @media (min-width: 800px) {
-    h3 {
-      font-size: 2rem;
-      height: 4rem;
-    }
+  button {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-family: monospace;
+    font-size: 150%;
+    color: silver;
+    border-top: 0.125rem solid rgba(0, 200, 0, 0.3);
+    border-left: 0.125rem solid rgba(0, 200, 0, 0.3);
+    border-right: 0.125rem solid rgba(0, 200, 0, 0.3);
+    background: rgba(0,0,0,0.69);
+    padding: 2rem 2rem;
   }
 </style>
 
-<h3 on:click={getCategories}>Change Category</h3>
+<Dashboard {activeQuestion} />
 <section>
-  <Dashboard {activeQuestion} />
   {#await getQuiz()}
-    Loading...
+  Loading...
   {:then data}
-
     {#each data.results as question, index}
       {#if index === activeQuestion}
         <div
-          in:fly={{ x: -100, delay: 500 }}
-          out:fly={{ x: 200 }}
+          in:blur={{ duration: 1000 }}
           class="fade-wrapper">
           <Question {nextQuestion} {question} />
         </div>
       {/if}
     {/each}
-
   {/await}
 </section>
+<button on:click={getCategories}>Change Category</button>
 
 <!-- MODAL -->
 {#if isModalOpen}

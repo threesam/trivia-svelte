@@ -3,7 +3,7 @@
 
   import { onMount } from 'svelte'
   import { fade, slide } from 'svelte/transition'
-  import { activeCategory, more } from './store.js'
+  import { activeCategory } from './store.js'
 
   let categories = []
 
@@ -12,7 +12,8 @@
   async function getCategories() {
     const res = await fetch('https://opentdb.com/api_category.php')
     const data = await res.json()
-    data.trivia_categories.forEach((category) => {
+    const uniqueCategories = [...new Set(data.trivia_categories)]
+    uniqueCategories.forEach((category) => {
       if (category.name.includes(':')) {
         category.name = category.name.split(': ')[1]
       }
@@ -26,36 +27,33 @@
 <style>
   section {
     position: relative;
-    padding: 1.5rem;
+    width: 100%;
+    max-width: 40rem;
+    padding: 5rem 2rem;
+  }
+  h1 {
+    position: absolute;
+    font-size: 2.5rem;
+    top: 1rem;
+    width: 100vw;
+    text-align: center;
   }
   ul {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
     grid-gap: 1rem;
-    max-width: 40rem;
-    margin: 0 auto;
-  }
-  @media (min-width: 800px) {
-    ul {
-      padding: 0 1rem;
-    }
-    h3 {
-      font-size: 2rem;
-      height: 4rem;
-    }
   }
 </style>
 
-<section>
-  <h3>Choose Category</h3>
+<h1 in:fade={{delay: 500}}>Categories</h1>
+<section in:fade={{delay: 1000}}>
   {#await getCategories()}
     loading...
   {:then categories}
     <ul in:slide out:fade>
-      {#each categories.slice(0, $more) as {id, name}, i}
+      {#each categories as {id, name}, i}
         <Category {id} {i}>{name}</Category>
       {/each}
-      <button class="more" on:click={() => $more += 4}>More</button>
     </ul>
   {/await}
 </section>

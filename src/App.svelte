@@ -1,11 +1,17 @@
 <script>
+  import { onMount } from 'svelte';
+  
   import Quiz from './Quiz.svelte'
   import Categories from './Categories.svelte'
-  import Nav from './Nav.svelte'
+  import Menu from './Menu.svelte'
   import P5Canvas from './P5Canvas.svelte'
   import sketch from './sketches/sketch-bg'
 
-  import { showQuiz, showCategories } from './store.js'
+  import { showQuiz, showCategories, showMenu } from './store.js'
+
+  onMount(() => {
+    $showMenu = true
+  })
 </script>
 
 <style>
@@ -16,20 +22,24 @@
     --dark-grey-rgb: 140, 172, 137;
     --black-rgb: 10, 16, 8;
 
-    --green: rgb(var(--green-rgb));
+    --green: #4cae04;
     --white: rgb(var(--white-rgb));
     --light-grey: rgb(var(--light-grey-rgb));
     --dark-grey: rgb(var(--dark-grey-rgb));
     --black: rgb(var(--black-rgb));
   }
   main {
-    position: relative;
-    margin: 0 auto;
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
   }
 </style>
 
+<P5Canvas id="bg" {sketch} />
 <main>
-  <P5Canvas id="bg" {sketch} />
+  {#if $showMenu}
+    <Menu />
+  {/if}
   
   {#if $showCategories}
     <Categories />

@@ -19,10 +19,9 @@
   .modal {
       display: grid;
       place-content: center;
-      background: white;
+      background: rgba(0,0,0,0.69);
       padding: 2rem;
       margin: 1rem;
-      border-radius: 15px;
       z-index: 10;
     }
 </style>
