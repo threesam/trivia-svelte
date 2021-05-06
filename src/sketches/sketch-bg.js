@@ -4,9 +4,9 @@ const sketch = (p5) => {
     p5.setup = () => {
         p5.createCanvas(document.body.offsetWidth, document.body.offsetHeight)
 
-        const particlesL = 69
+        const particlesL = 200
         for (let i = 0; i < particlesL; i++) {
-            particles.push(new Particle())
+            particles.push(new Particle(Math.floor(p5.random(12, 32)), Math.floor(p5.random(25, 250))))
         }
     }
 
@@ -27,9 +27,11 @@ const sketch = (p5) => {
 
 
     class Particle {
-        constructor() {
+        constructor(size, color) {
             this.pos = p5.createVector(p5.random(p5.width), p5.random(p5.height))
             this.vel = p5.createVector(p5.random(-0.5, 0.5), p5.random(-0.5, 0.5))
+            this.size = size
+            this.color = color
         }
 
         update() {
@@ -37,8 +39,9 @@ const sketch = (p5) => {
         }
 
         render() {
-            p5.fill(76, 174, 4)
+            p5.fill(76, this.color, 4)
             p5.text('?', this.pos.x, this.pos.y)
+            p5.textSize(this.size)
         }
 
         edges() {
