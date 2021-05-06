@@ -45,9 +45,6 @@
   $: if ($score > $victory) {
     isModalOpen = true
   }
-
-  // reactive declaration
-  $: questionNumber = activeQuestion + 1
 </script>
 
 <style>
